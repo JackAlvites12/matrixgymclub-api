@@ -307,9 +307,13 @@ export const captureOrder = async ( req: Request, res: Response ) => {
     
     // Convertimos el clientId en ObjectId porque lo estamos mandando como un hacia mi servidor 
     const convertClientId = new mongoose.Types.ObjectId( newClient._id )
-    const convertDate = new Date( data.purchase_units[0].payments.captures[0].create_time )
+    const utcDate = new Date( data.purchase_units[0].payments.captures[0].create_time )
 
-    const unixTimestampSeconds = Math.floor(convertDate.getTime() / 1000);
+
+    const offset = -5; // Perú es GMT-5
+    const localDate = new Date(utcDate.getTime() + offset * 60 * 60 * 1000); // Ajustar a GMT-5
+
+    // const unixTimestampSeconds = Math.floor(convertDate.getTime() / 1000);
     
     // Buscamos la membresia para poder actualizar su arreglo de clientes
     const membership = await Membership.findById( membership_id )
@@ -329,7 +333,7 @@ export const captureOrder = async ( req: Request, res: Response ) => {
         moneda: data.purchase_units[0].payments.captures[0].amount.currency_code,
         monto_total: data.purchase_units[0].payments.captures[0].amount.value,
         estado: 'Pagado',
-        fecha: new Date( unixTimestampSeconds * 1000 ),
+        fecha: localDate,
 
     })
 
