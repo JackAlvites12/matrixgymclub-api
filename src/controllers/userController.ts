@@ -45,8 +45,8 @@ export const signUp = async ( req: Request, res: Response ) => {
 
         const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY as string, { expiresIn: '24h' })
 
-        res.cookie('token', token, { maxAge: 60 * 60 * 24 * 1000, httpOnly: true, sameSite: 'lax' })
-        res.cookie('userId', newUserId, { maxAge: 60 * 60 * 24 * 1000, httpOnly: true, sameSite: 'lax' })
+        res.cookie('token', token, { maxAge: 60 * 60 * 24 * 1000, httpOnly: true, sameSite: 'none', secure: true })
+        res.cookie('userId', newUserId, { maxAge: 60 * 60 * 24 * 1000, httpOnly: true, sameSite: 'none', secure: true })
         
         return res.status( 201 ).json({ message: 'Usuario creado correctamente', newUser })
 
@@ -87,8 +87,8 @@ export const login = async ( req: Request, res: Response) => {
         const isClient = !!client
 
         // Generamos cookies | userId para poder almacenarlo al registrar cliente
-        res.cookie('token', token, { maxAge: 60 * 60 * 24 * 1000, httpOnly: true, sameSite: 'lax' })
-        res.cookie('userId', userId, { maxAge: 60* 60 * 24 * 1000, httpOnly: true, sameSite: 'lax' })
+        res.cookie('token', token, { maxAge: 60 * 60 * 24 * 1000, httpOnly: true, sameSite: 'none', secure: true })
+        res.cookie('userId', userId, { maxAge: 60* 60 * 24 * 1000, httpOnly: true, sameSite: 'none', secure: true })
 
         const bodyUser = {
 
