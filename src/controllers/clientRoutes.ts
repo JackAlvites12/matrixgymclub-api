@@ -70,6 +70,7 @@ export const selectMembership = async ( req: Request, res: Response ) => {
 
         res.cookie( 'membership_id', membershipId, { 
             maxAge: 60 * 60 * 24 * 1000, 
+            sameSite: 'lax',
         })
         
 
@@ -96,7 +97,7 @@ export const createCustomer = async ( req: Request, res: Response ) => {
         
         res.cookie('client', JSON.stringify( newClient ), { 
             maxAge: 60 * 60 * 24 * 1000, 
-            // sameSite: 'lax' predeterminada 
+            sameSite: 'lax', 
         })
 
         
