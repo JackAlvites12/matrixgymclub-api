@@ -128,6 +128,10 @@ export const stripeWebhook = async ( req: Request, res: Response ) => {
             const convertClientId = new mongoose.Types.ObjectId( newClient._id )
             const convertDate = new Date( created * 1000 )
 
+            // Obtener la fecha en GMT-5 (hora de Perú)
+            const peruTimeOffset = -5 * 60 * 60 * 1000; // GMT-5 en milisegundos
+            const dateInPeru = new Date(convertDate.getTime() + peruTimeOffset);
+
             
             // Buscamos la membresia para poder actualizar su arreglo de clientes
             const membership = await Membership.findById( metadata.membershipId )
@@ -147,7 +151,7 @@ export const stripeWebhook = async ( req: Request, res: Response ) => {
                 moneda: currency,
                 monto_total: amount_total / 100,
                 estado: (payment_status === 'paid' ? 'Pagado' : 'Pendiente'),
-                fecha: convertDate,
+                fecha: dateInPeru,
 
             })
 
@@ -313,7 +317,6 @@ export const captureOrder = async ( req: Request, res: Response ) => {
     const offset = -5; // Perú es GMT-5
     const localDate = new Date(utcDate.getTime() + offset * 60 * 60 * 1000); // Ajustar a GMT-5
 
-    // const unixTimestampSeconds = Math.floor(convertDate.getTime() / 1000);
     
     // Buscamos la membresia para poder actualizar su arreglo de clientes
     const membership = await Membership.findById( membership_id )
