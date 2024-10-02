@@ -37,8 +37,8 @@ export const createCheckout = async ( req: Request, res: Response ) => {
 
         const session = await stripe.checkout.sessions.create({
 
-            success_url: 'http://localhost:3001/success',
-            cancel_url: 'http://localhost:3001/cancel',
+            success_url: 'https://matrixgymclub-app.vercel.app/success',
+            cancel_url: 'https://matrixgymclub-app.vercel.app/cancel',
             line_items: [{
                 price_data: {
                     currency: 'usd',
@@ -248,7 +248,7 @@ export const createOrder = async ( req: Request, res: Response ) => {
                     landing_page: 'NO_PREFERENCE',
                     user_action: 'PAY_NOW',
                     return_url: 'https://matrixgymclub-api.up.railway.app/api/checkout/capture-order',
-                    cancel_url: 'http://localhost:3001/cancel',
+                    cancel_url: 'https://matrixgymclub-app.vercel.app/cancel',
                 }
             }
         }
@@ -395,6 +395,6 @@ export const captureOrder = async ( req: Request, res: Response ) => {
     res.clearCookie('client')
     res.clearCookie('membership_id')
     
-    return res.status( 200 ).redirect('http://localhost:3001/success')
+    return res.status( 200 ).redirect('https://matrixgymclub-app.vercel.app/success')
 
 }

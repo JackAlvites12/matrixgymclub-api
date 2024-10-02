@@ -12,7 +12,7 @@ import { stripeRoute } from './routes/stripeRoute'
     
     
     app.use( cors({
-        origin: 'http://localhost:3001',
+        origin: 'https://matrixgymclub-app.vercel.app',
         credentials: true,
     }))
     
