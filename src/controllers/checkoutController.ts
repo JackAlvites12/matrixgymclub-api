@@ -243,7 +243,7 @@ export const createOrder = async ( req: Request, res: Response ) => {
                     brand_name: 'MatrixGym Club',
                     landing_page: 'NO_PREFERENCE',
                     user_action: 'PAY_NOW',
-                    return_url: 'http://localhost:3000/api/checkout/capture-order',
+                    return_url: 'https://matrixgymclub-api.up.railway.app/api/checkout/capture-order',
                     cancel_url: 'http://localhost:3001/cancel',
                 }
             }
